@@ -1,4 +1,4 @@
-# NTFS Streams
+# NTFS Streams [![Build status](https://ci.appveyor.com/api/projects/status/ou84yb1e4b4xoty7)](https://ci.appveyor.com/project/Walkman100/ntfs-streams)
 
 A library for working with alternate data streams on NTFS file systems from .NET applications.
 

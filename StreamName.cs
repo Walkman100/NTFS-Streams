@@ -25,13 +25,22 @@ namespace Trinet.Core.IO.Ntfs
 	{
 		private static readonly SafeHGlobalHandle InvalidBlock = SafeHGlobalHandle.Invalid();
 
+		SafeHGlobalHandle memoryBlock = InvalidBlock;
+
 		/// <summary>
 		/// Returns the handle to the block of memory.
 		/// </summary>
 		/// <value>
 		/// The <see cref="SafeHGlobalHandle"/> representing the block of memory.
 		/// </value>
-		public SafeHGlobalHandle MemoryBlock { get; private set; } = InvalidBlock;
+		public SafeHGlobalHandle MemoryBlock {
+			get {
+				return memoryBlock;
+			}
+			private set {
+				memoryBlock = value;
+			}
+		}
 
 		/// <summary>
 		/// Performs application-defined tasks associated with freeing, 
