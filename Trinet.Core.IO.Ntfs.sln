@@ -7,8 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trinet.Core.IO.Ntfs", "Trin
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Legal", "Legal", "{CE48A3CF-6286-4FC0-A0CB-15403DFFEC5E}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\legal\CPOLv1.htm = ..\..\legal\CPOLv1.htm
-		..\..\legal\GPLv3.txt = ..\..\legal\GPLv3.txt
+		legal\CPOLv1.htm = legal\CPOLv1.htm
+		legal\GPLv3.txt = legal\GPLv3.txt
 	EndProjectSection
 EndProject
 Global
