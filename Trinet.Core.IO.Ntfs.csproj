@@ -1,100 +1,58 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-	<PropertyGroup>
-		<TargetFrameworks>netstandard2.0;net462;net35</TargetFrameworks>
-		<RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
-		<Version>4.1.1</Version>
-		<PackageProjectUrl>https://github.com/RichardD2/NTFS-Streams</PackageProjectUrl>
-		<PackageReleaseNotes>##4.1.1.0
-
-### IMPROVEMENTS:
-
-* Multi-targeting for .NET Standard 2.0, .NET Framework 4.6.2, and .NET Framework 3.5;
-
-### BUG FIXES:
-
-* Accessing ADS on directories with a trailing slash no long throws an exception.
-* No longer adds the long path prefix if the path is already prefixed.
-
-##4.0.0.0
-
-### IMPROVEMENTS:
-
-* The assembly now has a strong name.
-
-##3.5.0.1
-
-### BUG FIXES:
-
-* Fixes a bug where zero-length alternate streams prevented other streams from being enumerated.		</PackageReleaseNotes>
-		<Description>Utilities for working with alternate data streams on NTFS file systems.</Description>
-		<Authors>Richard Deeming</Authors>
-		<Copyright>Copyright © 2002-2016 Richard Deeming</Copyright>
-		<NeutralLanguage>en-GB</NeutralLanguage>
-		<SignAssembly>true</SignAssembly>
-		<AssemblyOriginatorKeyFile>Trinet.Core.IO.Ntfs.snk</AssemblyOriginatorKeyFile>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<RepositoryUrl>https://github.com/RichardD2/NTFS-Streams</RepositoryUrl>
-		<RepositoryType>Github</RepositoryType>
-		<PackageTags>NTFS Alternate Data Streams</PackageTags>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
-		<DocumentationFile>bin\Debug\netstandard2.0\Trinet.Core.IO.Ntfs.xml</DocumentationFile>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net462|AnyCPU'">
-		<DocumentationFile>bin\Debug\net462\Trinet.Core.IO.Ntfs.xml</DocumentationFile>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net35|AnyCPU'">
-		<DocumentationFile>bin\Debug\net35\Trinet.Core.IO.Ntfs.xml</DocumentationFile>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
-		<DocumentationFile>bin\Release\netstandard2.0\Trinet.Core.IO.Ntfs.xml</DocumentationFile>
-		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-		<WarningsAsErrors />
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net462|AnyCPU'">
-		<DocumentationFile>bin\Release\net462\Trinet.Core.IO.Ntfs.xml</DocumentationFile>
-		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-		<WarningsAsErrors />
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net35|AnyCPU'">
-		<DocumentationFile>bin\Release\net35\Trinet.Core.IO.Ntfs.xml</DocumentationFile>
-		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-		<WarningsAsErrors />
-	</PropertyGroup>
-
-	<ItemGroup>
-		<Compile Remove="_ReSharper.Caches\**" />
-		<Compile Remove="_ReSharper.Trinet.Core.IO.Ntfs\**" />
-		<EmbeddedResource Remove="_ReSharper.Caches\**" />
-		<EmbeddedResource Remove="_ReSharper.Trinet.Core.IO.Ntfs\**" />
-		<None Remove="_ReSharper.Caches\**" />
-		<None Remove="_ReSharper.Trinet.Core.IO.Ntfs\**" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Properties\" />
-	</ItemGroup>
-
-	<PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">
-		<DefineConstants>NETCORE;NETSTANDARD;NETSTANDARD2_0</DefineConstants>
-	</PropertyGroup>
-
-	<PropertyGroup Condition=" '$(TargetFramework)' == 'net462'">
-		<DefineConstants>NET462;NETFULL</DefineConstants>
-	</PropertyGroup>
-
-	<PropertyGroup Condition=" '$(TargetFramework)' == 'net35'">
-		<DefineConstants>NET35;NETFULL</DefineConstants>
-	</PropertyGroup>
-
-	<PropertyGroup>
-		<FrameworkPathOverride Condition="'$(TargetFramework)' == 'net35'">$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\Framework\.NETFramework\v3.5\Profile\Client</FrameworkPathOverride>
-	</PropertyGroup>
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectGuid>{7809A8ED-5C29-44AA-8D4F-2E14B4423494}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Trinet.Core.IO.Ntfs</RootNamespace>
+    <AssemblyName>Trinet.Core.IO.Ntfs</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AlternateDataStreamInfo.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="FileStreamAttributes.cs" />
+    <Compile Include="FileStreamType.cs" />
+    <Compile Include="FileSystem.cs" />
+    <Compile Include="Resources.cs" />
+    <Compile Include="SafeHGlobalHandle.cs" />
+    <Compile Include="SafeNativeMethods.cs" />
+    <Compile Include="StreamName.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
