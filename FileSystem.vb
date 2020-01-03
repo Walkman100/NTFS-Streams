@@ -16,7 +16,6 @@
 '  * and <http://opensource.org/licenses/bsd-license.php>.
 '
 
-
 Imports System.Collections.Generic
 Imports System.IO
 Imports System.Linq
@@ -26,9 +25,7 @@ Imports System.Security.Permissions
 ''' <summary>
 ''' File-system utilities.
 ''' </summary>
-Public NotInheritable Class FileSystem
-	Private Sub New()
-	End Sub
+Public Module FileSystem
 	#Region "List Streams"
 
 	''' <summary>
@@ -56,7 +53,7 @@ Public NotInheritable Class FileSystem
 	''' The caller does not have the required permission.
 	''' </exception>
 	<System.Runtime.CompilerServices.Extension> _
-	Public Shared Function ListAlternateDataStreams(file As FileSystemInfo) As IList(Of AlternateDataStreamInfo)
+	Public Function ListAlternateDataStreams(file As FileSystemInfo) As IList(Of AlternateDataStreamInfo)
 		If file Is Nothing Then
 			Throw New ArgumentNullException("file")
 		End If
@@ -66,9 +63,9 @@ Public NotInheritable Class FileSystem
 
 		Dim path As String = file.FullName
 
-		#If NET35 Then
+#If NET35 Then
 		New FileIOPermission(FileIOPermissionAccess.Read, path).Demand()
-		#End If
+#End If
 
 		Return SafeNativeMethods.ListStreams(path).[Select](Function(s) New AlternateDataStreamInfo(path, s)).ToList().AsReadOnly()
 	End Function
@@ -98,7 +95,7 @@ Public NotInheritable Class FileSystem
 	''' <exception cref="UnauthorizedAccessException">
 	''' The caller does not have the required permission.
 	''' </exception>
-	Public Shared Function ListAlternateDataStreams(filePath As String) As IList(Of AlternateDataStreamInfo)
+	Public Function ListAlternateDataStreams(filePath As String) As IList(Of AlternateDataStreamInfo)
 		If String.IsNullOrEmpty(filePath) Then
 			Throw New ArgumentNullException("filePath")
 		End If
@@ -106,9 +103,9 @@ Public NotInheritable Class FileSystem
 			Throw New FileNotFoundException(Nothing, filePath)
 		End If
 
-		#If NET35 Then
+#If NET35 Then
 		New FileIOPermission(FileIOPermissionAccess.Read, filePath).Demand()
-		#End If
+#End If
 
 		Return SafeNativeMethods.ListStreams(filePath).[Select](Function(s) New AlternateDataStreamInfo(filePath, s)).ToList().AsReadOnly()
 	End Function
@@ -138,7 +135,7 @@ Public NotInheritable Class FileSystem
 	''' <paramref name="streamName"/> contains invalid characters.
 	''' </exception>
 	<System.Runtime.CompilerServices.Extension> _
-	Public Shared Function AlternateDataStreamExists(file As FileSystemInfo, streamName As String) As Boolean
+	Public Function AlternateDataStreamExists(file As FileSystemInfo, streamName As String) As Boolean
 		If file Is Nothing Then
 			Throw New ArgumentNullException("file")
 		End If
@@ -169,7 +166,7 @@ Public NotInheritable Class FileSystem
 	''' <para>-or-</para>
 	''' <para><paramref name="streamName"/> contains invalid characters.</para>
 	''' </exception>
-	Public Shared Function AlternateDataStreamExists(filePath As String, streamName As String) As Boolean
+	Public Function AlternateDataStreamExists(filePath As String, streamName As String) As Boolean
 		If String.IsNullOrEmpty(filePath) Then
 			Throw New ArgumentNullException("filePath")
 		End If
@@ -223,7 +220,7 @@ Public NotInheritable Class FileSystem
 	''' The caller does not have the required permission, or the file is read-only.
 	''' </exception>
 	<System.Runtime.CompilerServices.Extension> _
-	Public Shared Function GetAlternateDataStream(file As FileSystemInfo, streamName As String, mode As FileMode) As AlternateDataStreamInfo
+	Public Function GetAlternateDataStream(file As FileSystemInfo, streamName As String, mode As FileMode) As AlternateDataStreamInfo
 		If file Is Nothing Then
 			Throw New ArgumentNullException("file")
 		End If
@@ -236,10 +233,10 @@ Public NotInheritable Class FileSystem
 			Throw New NotSupportedException(Resources.Error_InvalidMode(mode))
 		End If
 
-		#If NET35 Then
+#If NET35 Then
 		Dim permAccess As FileIOPermissionAccess = If((FileMode.Open = mode), FileIOPermissionAccess.Read, FileIOPermissionAccess.Read Or FileIOPermissionAccess.Write)
 		New FileIOPermission(permAccess, file.FullName).Demand()
-		#End If
+#End If
 
 		Dim path As String = SafeNativeMethods.BuildStreamPath(file.FullName, streamName)
 		Dim exists As Boolean = SafeNativeMethods.FileExists(path)
@@ -283,7 +280,7 @@ Public NotInheritable Class FileSystem
 	''' The caller does not have the required permission, or the file is read-only.
 	''' </exception>
 	<System.Runtime.CompilerServices.Extension> _
-	Public Shared Function GetAlternateDataStream(file As FileSystemInfo, streamName As String) As AlternateDataStreamInfo
+	Public Function GetAlternateDataStream(file As FileSystemInfo, streamName As String) As AlternateDataStreamInfo
 		Return file.GetAlternateDataStream(streamName, FileMode.OpenOrCreate)
 	End Function
 
@@ -327,7 +324,7 @@ Public NotInheritable Class FileSystem
 	''' <exception cref="UnauthorizedAccessException">
 	''' The caller does not have the required permission, or the file is read-only.
 	''' </exception>
-	Public Shared Function GetAlternateDataStream(filePath As String, streamName As String, mode As FileMode) As AlternateDataStreamInfo
+	Public Function GetAlternateDataStream(filePath As String, streamName As String, mode As FileMode) As AlternateDataStreamInfo
 		If String.IsNullOrEmpty(filePath) Then
 			Throw New ArgumentNullException("filePath")
 		End If
@@ -340,10 +337,10 @@ Public NotInheritable Class FileSystem
 			Throw New NotSupportedException(Resources.Error_InvalidMode(mode))
 		End If
 
-		#If NET35 Then
+#If NET35 Then
 		Dim permAccess As FileIOPermissionAccess = If((FileMode.Open = mode), FileIOPermissionAccess.Read, FileIOPermissionAccess.Read Or FileIOPermissionAccess.Write)
 		New FileIOPermission(permAccess, filePath).Demand()
-		#End If
+#End If
 
 		Dim path As String = SafeNativeMethods.BuildStreamPath(filePath, streamName)
 		Dim exists As Boolean = SafeNativeMethods.FileExists(path)
@@ -387,7 +384,7 @@ Public NotInheritable Class FileSystem
 	''' <exception cref="UnauthorizedAccessException">
 	''' The caller does not have the required permission, or the file is read-only.
 	''' </exception>
-	Public Shared Function GetAlternateDataStream(filePath As String, streamName As String) As AlternateDataStreamInfo
+	Public Function GetAlternateDataStream(filePath As String, streamName As String) As AlternateDataStreamInfo
 		Return GetAlternateDataStream(filePath, streamName, FileMode.OpenOrCreate)
 	End Function
 
@@ -425,16 +422,16 @@ Public NotInheritable Class FileSystem
 	''' The specified file is in use. 
 	''' </exception>
 	<System.Runtime.CompilerServices.Extension> _
-	Public Shared Function DeleteAlternateDataStream(file As FileSystemInfo, streamName As String) As Boolean
+	Public Function DeleteAlternateDataStream(file As FileSystemInfo, streamName As String) As Boolean
 		If file Is Nothing Then
 			Throw New ArgumentNullException("file")
 		End If
 		SafeNativeMethods.ValidateStreamName(streamName)
 
-		#If NET35 Then
+#If NET35 Then
 		Const  permAccess As FileIOPermissionAccess = FileIOPermissionAccess.Write
 		New FileIOPermission(permAccess, file.FullName).Demand()
-		#End If
+#End If
 
 		Dim result = False
 		If file.Exists Then
@@ -477,16 +474,16 @@ Public NotInheritable Class FileSystem
 	''' <exception cref="IOException">
 	''' The specified file is in use. 
 	''' </exception>
-	Public Shared Function DeleteAlternateDataStream(filePath As String, streamName As String) As Boolean
+	Public Function DeleteAlternateDataStream(filePath As String, streamName As String) As Boolean
 		If String.IsNullOrEmpty(filePath) Then
 			Throw New ArgumentNullException("filePath")
 		End If
 		SafeNativeMethods.ValidateStreamName(streamName)
 
-		#If NET35 Then
-		Const  permAccess As FileIOPermissionAccess = FileIOPermissionAccess.Write
+#If NET35 Then
+		Const permAccess As FileIOPermissionAccess = FileIOPermissionAccess.Write
 		New FileIOPermission(permAccess, filePath).Demand()
-		#End If
+#End If
 
 		Dim result = False
 		If SafeNativeMethods.FileExists(filePath) Then
@@ -500,4 +497,4 @@ Public NotInheritable Class FileSystem
 	End Function
 
 	#End Region
-End Class
+End Module

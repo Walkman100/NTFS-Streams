@@ -28,9 +28,7 @@ Imports Microsoft.Win32.SafeHandles
 ''' <summary>
 ''' Safe native methods.
 ''' </summary>
-Friend NotInheritable Class SafeNativeMethods
-	Private Sub New()
-	End Sub
+Friend Module SafeNativeMethods
 	#Region "Constants and flags"
 
 	Public Const MaxPath As Integer = 256
@@ -44,7 +42,7 @@ Friend NotInheritable Class SafeNativeMethods
 	' "Characters whose integer representations are in the range from 1 through 31, 
 	' except for alternate streams where these characters are allowed"
 	' http://msdn.microsoft.com/en-us/library/aa365247(v=VS.85).aspx
-	Private Shared ReadOnly InvalidStreamNameChars As Char() = Path.GetInvalidFileNameChars().Where(Function(c) c < 1 OrElse c > 31).ToArray()
+	Private ReadOnly InvalidStreamNameChars As Char() = Path.GetInvalidFileNameChars().Where(Function(c) c < 1 OrElse c > 31).ToArray()
 
 	<Flags> _
 	Public Enum NativeFileFlags As UInteger
@@ -93,43 +91,39 @@ Friend NotInheritable Class SafeNativeMethods
 	#Region "P/Invoke Methods"
 
 	<DllImport("kernel32.dll", CharSet := CharSet.Auto, BestFitMapping := False, ThrowOnUnmappableChar := True)> _
-	Private Shared Function FormatMessage(dwFlags As Integer, lpSource As IntPtr, dwMessageId As Integer, dwLanguageId As Integer, lpBuffer As StringBuilder, nSize As Integer, _
-	vaListArguments As IntPtr) As Integer
+	Private Function FormatMessage(dwFlags As Integer, lpSource As IntPtr, dwMessageId As Integer, dwLanguageId As Integer, lpBuffer As StringBuilder, nSize As Integer, vaListArguments As IntPtr) As Integer
 	End Function
 
 	<DllImport("kernel32", CharSet := CharSet.Unicode, SetLastError := True)> _
-	Private Shared Function GetFileAttributes(fileName As String) As Integer
+	Private Function GetFileAttributes(fileName As String) As Integer
 	End Function
 
 	<DllImport("kernel32", CharSet := CharSet.Unicode, SetLastError := True)> _
-	Private Shared Function GetFileSizeEx(handle As SafeFileHandle, ByRef size As LargeInteger) As <MarshalAs(UnmanagedType.Bool)> Boolean
+	Private Function GetFileSizeEx(handle As SafeFileHandle, ByRef size As LargeInteger) As <MarshalAs(UnmanagedType.Bool)> Boolean
 	End Function
 
 	<DllImport("kernel32.dll")> _
-	Private Shared Function GetFileType(handle As SafeFileHandle) As Integer
+	Private Function GetFileType(handle As SafeFileHandle) As Integer
 	End Function
 
 	<DllImport("kernel32", CharSet := CharSet.Unicode, SetLastError := True)> _
-	Private Shared Function CreateFile(name As String, access As NativeFileAccess, share As FileShare, security As IntPtr, mode As FileMode, flags As NativeFileFlags, _
-		template As IntPtr) As SafeFileHandle
+	Private Function CreateFile(name As String, access As NativeFileAccess, share As FileShare, security As IntPtr, mode As FileMode, flags As NativeFileFlags, template As IntPtr) As SafeFileHandle
 	End Function
 
 	<DllImport("kernel32", CharSet := CharSet.Unicode, SetLastError := True)> _
-	Private Shared Function DeleteFile(name As String) As <MarshalAs(UnmanagedType.Bool)> Boolean
+	Private Function DeleteFile(name As String) As <MarshalAs(UnmanagedType.Bool)> Boolean
 	End Function
 
 	<DllImport("kernel32", SetLastError := True)> _
-	Private Shared Function BackupRead(hFile As SafeFileHandle, ByRef pBuffer As Win32StreamId, numberOfBytesToRead As Integer, ByRef numberOfBytesRead As Integer, <MarshalAs(UnmanagedType.Bool)> abort As Boolean, <MarshalAs(UnmanagedType.Bool)> processSecurity As Boolean, _
-		ByRef context As IntPtr) As <MarshalAs(UnmanagedType.Bool)> Boolean
+	Private Function BackupRead(hFile As SafeFileHandle, ByRef pBuffer As Win32StreamId, numberOfBytesToRead As Integer, ByRef numberOfBytesRead As Integer, <MarshalAs(UnmanagedType.Bool)> abort As Boolean, <MarshalAs(UnmanagedType.Bool)> processSecurity As Boolean, ByRef context As IntPtr) As <MarshalAs(UnmanagedType.Bool)> Boolean
 	End Function
 
 	<DllImport("kernel32", SetLastError := True)> _
-	Private Shared Function BackupRead(hFile As SafeFileHandle, pBuffer As SafeHGlobalHandle, numberOfBytesToRead As Integer, ByRef numberOfBytesRead As Integer, <MarshalAs(UnmanagedType.Bool)> abort As Boolean, <MarshalAs(UnmanagedType.Bool)> processSecurity As Boolean, _
-		ByRef context As IntPtr) As <MarshalAs(UnmanagedType.Bool)> Boolean
+	Private Function BackupRead(hFile As SafeFileHandle, pBuffer As SafeHGlobalHandle, numberOfBytesToRead As Integer, ByRef numberOfBytesRead As Integer, <MarshalAs(UnmanagedType.Bool)> abort As Boolean, <MarshalAs(UnmanagedType.Bool)> processSecurity As Boolean, ByRef context As IntPtr) As <MarshalAs(UnmanagedType.Bool)> Boolean
 	End Function
 
 	<DllImport("kernel32", SetLastError := True)> _
-	Private Shared Function BackupSeek(hFile As SafeFileHandle, bytesToSeekLow As Integer, bytesToSeekHigh As Integer, ByRef bytesSeekedLow As Integer, ByRef bytesSeekedHigh As Integer, ByRef context As IntPtr) As <MarshalAs(UnmanagedType.Bool)> Boolean
+	Private Function BackupSeek(hFile As SafeFileHandle, bytesToSeekLow As Integer, bytesToSeekHigh As Integer, ByRef bytesSeekedLow As Integer, ByRef bytesSeekedHigh As Integer, ByRef context As IntPtr) As <MarshalAs(UnmanagedType.Bool)> Boolean
 	End Function
 
 	#End Region
@@ -147,11 +141,11 @@ Friend NotInheritable Class SafeNativeMethods
 
 	#Region "Utility Methods"
 
-	Private Shared Function MakeHRFromErrorCode(errorCode As Integer) As Integer
+	Private Function MakeHRFromErrorCode(errorCode As Integer) As Integer
 		Return (-2147024896 Or errorCode)
 	End Function
 
-	Private Shared Function GetErrorMessage(errorCode As Integer) As String
+	Private Function GetErrorMessage(errorCode As Integer) As String
 		Dim lpBuffer = New StringBuilder(&H200)
 		If 0 <> FormatMessage(&H3200, IntPtr.Zero, errorCode, 0, lpBuffer, lpBuffer.Capacity, _
 			IntPtr.Zero) Then
@@ -161,7 +155,7 @@ Friend NotInheritable Class SafeNativeMethods
 		Return Resources.Error_UnknownError(errorCode)
 	End Function
 
-	Private Shared Sub ThrowIOError(errorCode As Integer, path As String)
+	Private Sub ThrowIOError(errorCode As Integer, path As String)
 		Select Case errorCode
 			Case 0
 				If True Then
@@ -246,7 +240,7 @@ Friend NotInheritable Class SafeNativeMethods
 		End Select
 	End Sub
 
-	Public Shared Sub ThrowLastIOError(path As String)
+	Public Sub ThrowLastIOError(path As String)
 		Dim errorCode As Integer = Marshal.GetLastWin32Error()
 		If 0 <> errorCode Then
 			Dim hr As Integer = Marshal.GetHRForLastWin32Error()
@@ -258,7 +252,7 @@ Friend NotInheritable Class SafeNativeMethods
 	End Sub
 
 	<System.Runtime.CompilerServices.Extension> _
-	Public Shared Function ToNative(access As FileAccess) As NativeFileAccess
+	Public Function ToNative(access As FileAccess) As NativeFileAccess
 		Dim result As NativeFileAccess = 0
 		If FileAccess.Read = (FileAccess.Read And access) Then
 			result = result Or NativeFileAccess.GenericRead
@@ -269,7 +263,7 @@ Friend NotInheritable Class SafeNativeMethods
 		Return result
 	End Function
 
-	Public Shared Function BuildStreamPath(filePath As String, streamName As String) As String
+	Public Function BuildStreamPath(filePath As String, streamName As String) As String
 		If String.IsNullOrEmpty(filePath) Then
 			Return String.Empty
 		End If
@@ -295,13 +289,13 @@ Friend NotInheritable Class SafeNativeMethods
 		Return result
 	End Function
 
-	Public Shared Sub ValidateStreamName(streamName As String)
+	Public Sub ValidateStreamName(streamName As String)
 		If Not String.IsNullOrEmpty(streamName) AndAlso -1 <> streamName.IndexOfAny(InvalidStreamNameChars) Then
 			Throw New ArgumentException(Resources.Error_InvalidFileChars())
 		End If
 	End Sub
 
-	Private Shared Function SafeGetFileAttributes(name As String) As Integer
+	Private Function SafeGetFileAttributes(name As String) As Integer
 		If String.IsNullOrEmpty(name) Then
 			Throw New ArgumentNullException("name")
 		End If
@@ -325,11 +319,11 @@ Friend NotInheritable Class SafeNativeMethods
 		Return result
 	End Function
 
-	Public Shared Function FileExists(name As String) As Boolean
+	Public Function FileExists(name As String) As Boolean
 		Return -1 <> SafeGetFileAttributes(name)
 	End Function
 
-	Public Shared Function SafeDeleteFile(name As String) As Boolean
+	Public Function SafeDeleteFile(name As String) As Boolean
 		If String.IsNullOrEmpty(name) Then
 			Throw New ArgumentNullException("name")
 		End If
@@ -353,7 +347,7 @@ Friend NotInheritable Class SafeNativeMethods
 		Return result
 	End Function
 
-	Public Shared Function SafeCreateFile(path As String, access As NativeFileAccess, share As FileShare, security As IntPtr, mode As FileMode, flags As NativeFileFlags, _
+	Public Function SafeCreateFile(path As String, access As NativeFileAccess, share As FileShare, security As IntPtr, mode As FileMode, flags As NativeFileFlags, _
 		template As IntPtr) As SafeFileHandle
 		Dim result As SafeFileHandle = CreateFile(path, access, share, security, mode, flags, _
 			template)
@@ -365,7 +359,7 @@ Friend NotInheritable Class SafeNativeMethods
 		Return result
 	End Function
 
-	Private Shared Function GetFileSize(path As String, handle As SafeFileHandle) As Long
+	Private Function GetFileSize(path As String, handle As SafeFileHandle) As Long
 		Dim result As Long = 0L
 		If handle IsNot Nothing AndAlso Not handle.IsInvalid Then
 			Dim temp As Trinet.Core.IO.Ntfs.SafeNativeMethods.LargeInteger
@@ -379,7 +373,7 @@ Friend NotInheritable Class SafeNativeMethods
 		Return result
 	End Function
 
-	Public Shared Function GetFileSize(path As String) As Long
+	Public Function GetFileSize(path As String) As Long
 		Dim result As Long = 0L
 		If Not String.IsNullOrEmpty(path) Then
 			Using handle As SafeFileHandle = SafeCreateFile(path, NativeFileAccess.GenericRead, FileShare.Read, IntPtr.Zero, FileMode.Open, 0, _
@@ -391,7 +385,7 @@ Friend NotInheritable Class SafeNativeMethods
 		Return result
 	End Function
 
-	Public Shared Function ListStreams(filePath As String) As IList(Of Win32StreamInfo)
+	Public Function ListStreams(filePath As String) As IList(Of Win32StreamInfo)
 		If String.IsNullOrEmpty(filePath) Then
 			Throw New ArgumentNullException("filePath")
 		End If
@@ -467,4 +461,4 @@ Friend NotInheritable Class SafeNativeMethods
 	End Function
 
 	#End Region
-End Class
+End Module
