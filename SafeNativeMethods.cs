@@ -346,7 +346,9 @@ namespace Trinet.Core.IO.Ntfs
 			return result;
 		}
 
-		public static bool FileExists(string name) => -1 != SafeGetFileAttributes(name);
+		public static bool FileExists(string name) {
+			return -1 != SafeGetFileAttributes(name);
+		}
 
 		public static bool SafeDeleteFile(string name)
 		{
@@ -391,9 +393,10 @@ namespace Trinet.Core.IO.Ntfs
 			long result = 0L;
 			if (null != handle && !handle.IsInvalid)
 			{
-				if (GetFileSizeEx(handle, out var value))
+			    Trinet.Core.IO.Ntfs.SafeNativeMethods.LargeInteger temp;
+				if (GetFileSizeEx(handle, out temp))
 				{
-					result = value.ToInt64();
+					result = temp.ToInt64();
 				}
 				else
 				{

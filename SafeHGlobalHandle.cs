@@ -63,7 +63,11 @@ namespace Trinet.Core.IO.Ntfs
 		/// <see langword="true"/> if the handle value is invalid;
 		/// otherwise, <see langword="false"/>.
 		/// </value>
-		public override bool IsInvalid => IntPtr.Zero == handle;
+		public override bool IsInvalid {
+			get {
+				return IntPtr.Zero == handle;
+			}
+		}
 
 		/// <summary>
 		/// Returns the size of this memory block.
@@ -71,7 +75,14 @@ namespace Trinet.Core.IO.Ntfs
 		/// <value>
 		/// The size of this memory block, in bytes.
 		/// </value>
-		public int Size { get; }
+		public int Size {
+			get {
+				return Size;
+			}
+			private set {
+				Size = value;
+			}
+		}
 
 		#endregion
 

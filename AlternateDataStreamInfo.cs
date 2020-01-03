@@ -101,7 +101,14 @@ namespace Trinet.Core.IO.Ntfs
 		/// <value>
 		/// The full path of this stream.
 		/// </value>
-		public string FullPath { get; }
+		public string FullPath {
+			get {
+				return FullPath;
+			}
+			private set {
+				FullPath = value;
+			}
+		}
 
 		/// <summary>
 		/// Returns the full path of the file which contains the stream.
@@ -109,7 +116,14 @@ namespace Trinet.Core.IO.Ntfs
 		/// <value>
 		/// The full file-system path of the file which contains the stream.
 		/// </value>
-		public string FilePath { get; }
+		public string FilePath {
+			get {
+				return FilePath;
+			}
+			private set {
+				FilePath = value;
+			}
+		}
 
 		/// <summary>
 		/// Returns the name of the stream.
@@ -117,7 +131,14 @@ namespace Trinet.Core.IO.Ntfs
 		/// <value>
 		/// The name of the stream.
 		/// </value>
-		public string Name { get; }
+		public string Name {
+			get {
+				return Name;
+			}
+			private set {
+				Name = value;
+			}
+		}
 
 		/// <summary>
 		/// Returns a flag indicating whether the specified stream exists.
@@ -126,7 +147,14 @@ namespace Trinet.Core.IO.Ntfs
 		/// <see langword="true"/> if the stream exists;
 		/// otherwise, <see langword="false"/>.
 		/// </value>
-		public bool Exists { get; }
+		public bool Exists {
+			get {
+				return Exists;
+			}
+			private set {
+				Exists = value;
+			}
+		}
 
 		/// <summary>
 		/// Returns the size of the stream, in bytes.
@@ -134,7 +162,14 @@ namespace Trinet.Core.IO.Ntfs
 		/// <value>
 		/// The size of the stream, in bytes.
 		/// </value>
-		public long Size { get; }
+		public long Size {
+			get {
+				return Size;
+			}
+			private set {
+				Size = value;
+			}
+		}
 
 		/// <summary>
 		/// Returns the type of data.
@@ -143,7 +178,14 @@ namespace Trinet.Core.IO.Ntfs
 		/// One of the <see cref="FileStreamType"/> values.
 		/// </value>
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
-		public FileStreamType StreamType { get; }
+		public FileStreamType StreamType {
+			get {
+				return StreamType;
+			}
+			private set {
+				StreamType = value;
+			}
+		}
 
 		/// <summary>
 		/// Returns attributes of the data stream.
@@ -152,7 +194,14 @@ namespace Trinet.Core.IO.Ntfs
 		/// A combination of <see cref="FileStreamAttributes"/> values.
 		/// </value>
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
-		public FileStreamAttributes Attributes { get; }
+		public FileStreamAttributes Attributes {
+			get {
+				return Attributes;
+			}
+			private set {
+				Attributes = value;
+			}
+		}
 
 		#endregion
 
