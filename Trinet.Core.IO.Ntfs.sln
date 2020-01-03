@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Legal", "Legal", "{CE48A3CF
 		legal\GPLv3.txt = legal\GPLv3.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trinet.Core.IO.Ntfs", "Trinet.Core.IO.Ntfs.csproj", "{7809A8ED-5C29-44AA-8D4F-2E14B4423494}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Trinet.Core.IO.Ntfs", "Trinet.Core.IO.Ntfs.vbproj", "{10D52F4C-2B43-4893-9152-0B6C4B4A7592}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7809A8ED-5C29-44AA-8D4F-2E14B4423494}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7809A8ED-5C29-44AA-8D4F-2E14B4423494}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7809A8ED-5C29-44AA-8D4F-2E14B4423494}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7809A8ED-5C29-44AA-8D4F-2E14B4423494}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10D52F4C-2B43-4893-9152-0B6C4B4A7592}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10D52F4C-2B43-4893-9152-0B6C4B4A7592}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10D52F4C-2B43-4893-9152-0B6C4B4A7592}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10D52F4C-2B43-4893-9152-0B6C4B4A7592}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
