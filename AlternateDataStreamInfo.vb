@@ -252,7 +252,7 @@ Public NotInheritable Class AlternateDataStreamInfo
 	''' <see langword="true"/> if the current object is equal to the <paramref name="other"/> parameter;
 	''' otherwise, <see langword="false"/>.
 	''' </returns>
-	Public Overloads Function Equals(other As AlternateDataStreamInfo) As Boolean
+	Public Overloads Function Equals(other As AlternateDataStreamInfo) As Boolean Implements IEquatable(Of AlternateDataStreamInfo).Equals
 		If ReferenceEquals(Nothing, other) Then
 			Return False
 		End If
