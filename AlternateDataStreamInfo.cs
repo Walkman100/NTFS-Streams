@@ -28,7 +28,7 @@ namespace Trinet.Core.IO.Ntfs
 	/// <summary>
 	/// Represents the details of an alternative data stream.
 	/// </summary>
-	[DebuggerDisplay("{" + nameof(FullPath) + "}")]
+	[DebuggerDisplay("{FullPath}")]
 	public sealed class AlternateDataStreamInfo : IEquatable<AlternateDataStreamInfo>
 	{
 		#region Constructor
@@ -389,7 +389,7 @@ namespace Trinet.Core.IO.Ntfs
 		/// </exception>
 		public FileStream Open(FileMode mode, FileAccess access, FileShare share, int bufferSize, bool useAsync)
 		{
-			if (0 >= bufferSize) throw new ArgumentOutOfRangeException(nameof(bufferSize), bufferSize, null);
+			if (0 >= bufferSize) throw new ArgumentOutOfRangeException("bufferSize", bufferSize, null);
 
 #if NET35
 			FileIOPermissionAccess permAccess = CalculateAccess(mode, access);

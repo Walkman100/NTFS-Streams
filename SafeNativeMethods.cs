@@ -322,7 +322,7 @@ namespace Trinet.Core.IO.Ntfs
 
 		private static int SafeGetFileAttributes(string name)
 		{
-			if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
+			if (string.IsNullOrEmpty(name)) throw new ArgumentNullException("name");
 
 			int result = GetFileAttributes(name);
 			if (-1 == result)
@@ -350,7 +350,7 @@ namespace Trinet.Core.IO.Ntfs
 
 		public static bool SafeDeleteFile(string name)
 		{
-			if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
+			if (string.IsNullOrEmpty(name)) throw new ArgumentNullException("name");
 
 			bool result = DeleteFile(name);
 			if (!result)
@@ -420,8 +420,8 @@ namespace Trinet.Core.IO.Ntfs
 
 		public static IList<Win32StreamInfo> ListStreams(string filePath)
 		{
-			if (string.IsNullOrEmpty(filePath)) throw new ArgumentNullException(nameof(filePath));
-			if (-1 != filePath.IndexOfAny(Path.GetInvalidPathChars())) throw new ArgumentException(Resources.Error_InvalidFileChars(), nameof(filePath));
+			if (string.IsNullOrEmpty(filePath)) throw new ArgumentNullException("filePath");
+			if (-1 != filePath.IndexOfAny(Path.GetInvalidPathChars())) throw new ArgumentException(Resources.Error_InvalidFileChars(), "filePath");
 
 			var result = new List<Win32StreamInfo>();
 
@@ -487,6 +487,7 @@ namespace Trinet.Core.IO.Ntfs
 								// Skip the contents of the stream:
 								if (0 != streamId.Size.Low || 0 != streamId.Size.High)
 								{
+								    int _;
 									if (!finished && !BackupSeek(hFile, streamId.Size.Low, streamId.Size.High, out _, out _, ref context))
 									{
 										finished = true;

@@ -58,7 +58,7 @@ namespace Trinet.Core.IO.Ntfs
 		/// </exception>
 		public static IList<AlternateDataStreamInfo> ListAlternateDataStreams(this FileSystemInfo file)
 		{
-			if (null == file) throw new ArgumentNullException(nameof(file));
+			if (null == file) throw new ArgumentNullException("file");
 			if (!file.Exists) throw new FileNotFoundException(null, file.FullName);
 
 			string path = file.FullName;
@@ -99,7 +99,7 @@ namespace Trinet.Core.IO.Ntfs
 		/// </exception>
 		public static IList<AlternateDataStreamInfo> ListAlternateDataStreams(string filePath)
 		{
-			if (string.IsNullOrEmpty(filePath)) throw new ArgumentNullException(nameof(filePath));
+			if (string.IsNullOrEmpty(filePath)) throw new ArgumentNullException("filePath");
 			if (!SafeNativeMethods.FileExists(filePath)) throw new FileNotFoundException(null, filePath);
 
 #if NET35
@@ -137,7 +137,7 @@ namespace Trinet.Core.IO.Ntfs
 		/// </exception>
 		public static bool AlternateDataStreamExists(this FileSystemInfo file, string streamName)
 		{
-			if (null == file) throw new ArgumentNullException(nameof(file));
+			if (null == file) throw new ArgumentNullException("file");
 			SafeNativeMethods.ValidateStreamName(streamName);
 
 			string path = SafeNativeMethods.BuildStreamPath(file.FullName, streamName);
@@ -167,7 +167,7 @@ namespace Trinet.Core.IO.Ntfs
 		/// </exception>
 		public static bool AlternateDataStreamExists(string filePath, string streamName)
 		{
-			if (string.IsNullOrEmpty(filePath)) throw new ArgumentNullException(nameof(filePath));
+			if (string.IsNullOrEmpty(filePath)) throw new ArgumentNullException("filePath");
 			SafeNativeMethods.ValidateStreamName(streamName);
 
 			string path = SafeNativeMethods.BuildStreamPath(filePath, streamName);
@@ -219,7 +219,7 @@ namespace Trinet.Core.IO.Ntfs
 		/// </exception>
 		public static AlternateDataStreamInfo GetAlternateDataStream(this FileSystemInfo file, string streamName, FileMode mode)
 		{
-			if (null == file) throw new ArgumentNullException(nameof(file));
+			if (null == file) throw new ArgumentNullException("file");
 			if (!file.Exists) throw new FileNotFoundException(null, file.FullName);
 			SafeNativeMethods.ValidateStreamName(streamName);
 
@@ -323,7 +323,7 @@ namespace Trinet.Core.IO.Ntfs
 		/// </exception>
 		public static AlternateDataStreamInfo GetAlternateDataStream(string filePath, string streamName, FileMode mode)
 		{
-			if (string.IsNullOrEmpty(filePath)) throw new ArgumentNullException(nameof(filePath));
+			if (string.IsNullOrEmpty(filePath)) throw new ArgumentNullException("filePath");
 			if (!SafeNativeMethods.FileExists(filePath)) throw new FileNotFoundException(null, filePath);
 			SafeNativeMethods.ValidateStreamName(streamName);
 
@@ -421,7 +421,7 @@ namespace Trinet.Core.IO.Ntfs
 		/// </exception>
 		public static bool DeleteAlternateDataStream(this FileSystemInfo file, string streamName)
 		{
-			if (null == file) throw new ArgumentNullException(nameof(file));
+			if (null == file) throw new ArgumentNullException("file");
 			SafeNativeMethods.ValidateStreamName(streamName);
 
 #if NET35
@@ -474,7 +474,7 @@ namespace Trinet.Core.IO.Ntfs
 		/// </exception>
 		public static bool DeleteAlternateDataStream(string filePath, string streamName)
 		{
-			if (string.IsNullOrEmpty(filePath)) throw new ArgumentNullException(nameof(filePath));
+			if (string.IsNullOrEmpty(filePath)) throw new ArgumentNullException("filePath");
 			SafeNativeMethods.ValidateStreamName(streamName);
 
 #if NET35
