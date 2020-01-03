@@ -42,7 +42,7 @@ Friend Module SafeNativeMethods
 	' "Characters whose integer representations are in the range from 1 through 31, 
 	' except for alternate streams where these characters are allowed"
 	' http://msdn.microsoft.com/en-us/library/aa365247(v=VS.85).aspx
-	Private ReadOnly InvalidStreamNameChars As Char() = Path.GetInvalidFileNameChars().Where(Function(c) c < 1 OrElse c > 31).ToArray()
+	Private ReadOnly InvalidStreamNameChars As Char() = Path.GetInvalidFileNameChars().Where(Function(c) c < Chr(1) OrElse c > Chr(31)).ToArray()
 
 	<Flags> _
 	Public Enum NativeFileFlags As UInteger

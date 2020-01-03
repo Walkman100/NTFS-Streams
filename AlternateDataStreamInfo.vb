@@ -223,7 +223,7 @@ Public NotInheritable Class AlternateDataStreamInfo
 	''' A hash code for the current <see cref="Object"/>.
 	''' </returns>
 	Public Overrides Function GetHashCode() As Integer
-		Dim comparer = StringComparer.OrdinalIgnoreCase
+		Dim comparer As StringComparer = StringComparer.OrdinalIgnoreCase
 		Return comparer.GetHashCode(If(FilePath, String.Empty)) Xor comparer.GetHashCode(If(Name, String.Empty))
 	End Function
 
