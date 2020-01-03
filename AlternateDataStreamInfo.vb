@@ -383,7 +383,7 @@ Public NotInheritable Class AlternateDataStreamInfo
 		New FileIOPermission(permAccess, FilePath).Demand()
 #End If
 
-		Dim flags As SafeNativeMethods.NativeFileFlags = DirectCast(If(useAsync, SafeNativeMethods.NativeFileFlags.Overlapped, 0), SafeNativeMethods.NativeFileFlags)
+		Dim flags As SafeNativeMethods.NativeFileFlags = If(useAsync, SafeNativeMethods.NativeFileFlags.Overlapped, CType(0, SafeNativeMethods.NativeFileFlags))
 		Dim handle = SafeNativeMethods.SafeCreateFile(FullPath, access.ToNative(), share, IntPtr.Zero, mode, flags, _
 			IntPtr.Zero)
 		If handle.IsInvalid Then
