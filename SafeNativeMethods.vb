@@ -94,7 +94,7 @@ Friend NotInheritable Class SafeNativeMethods
 
 	<DllImport("kernel32.dll", CharSet := CharSet.Auto, BestFitMapping := False, ThrowOnUnmappableChar := True)> _
 	Private Shared Function FormatMessage(dwFlags As Integer, lpSource As IntPtr, dwMessageId As Integer, dwLanguageId As Integer, lpBuffer As StringBuilder, nSize As Integer, _
-		vaListArguments As IntPtr) As Integer
+	vaListArguments As IntPtr) As Integer
 	End Function
 
 	<DllImport("kernel32", CharSet := CharSet.Unicode, SetLastError := True)> _
@@ -439,17 +439,16 @@ Friend NotInheritable Class SafeNativeMethods
 								' Add the stream info to the result:
 								If Not String.IsNullOrEmpty(name) Then
 									result.Add(New Win32StreamInfo() With { _
-										Key .StreamType = CType(streamId.StreamId, FileStreamType), _
-										Key .StreamAttributes = CType(streamId.StreamAttributes, FileStreamAttributes), _
-										Key .StreamSize = streamId.Size.ToInt64(), _
-										Key .StreamName = name _
+										.StreamType = DirectCast(streamId.StreamId, FileStreamType), _
+										.StreamAttributes = DirectCast(streamId.StreamAttributes, FileStreamAttributes), _
+										.StreamSize = streamId.Size.ToInt64(), _
+										.StreamName = name _
 									})
 								End If
 
 								' Skip the contents of the stream:
 								If 0 <> streamId.Size.Low OrElse 0 <> streamId.Size.High Then
-									Dim _ As Integer
-									If Not finished AndAlso Not BackupSeek(hFile, streamId.Size.Low, streamId.Size.High, _, _, context) Then
+									If Not finished AndAlso Not BackupSeek(hFile, streamId.Size.Low, streamId.Size.High, 0, 0, context) Then
 										finished = True
 									End If
 								End If
