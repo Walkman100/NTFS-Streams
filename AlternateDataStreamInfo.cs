@@ -45,14 +45,14 @@ namespace Trinet.Core.IO.Ntfs
 		/// </param>
 		internal AlternateDataStreamInfo(string filePath, SafeNativeMethods.Win32StreamInfo info)
 		{
-			FilePath = filePath;
-			Name = info.StreamName;
-			StreamType = info.StreamType;
-			Attributes = info.StreamAttributes;
-			Size = info.StreamSize;
-			Exists = true;
+			this.filePath = filePath;
+			name = info.StreamName;
+			streamType = info.StreamType;
+			attributes = info.StreamAttributes;
+			size = info.StreamSize;
+			exists = true;
 
-			FullPath = SafeNativeMethods.BuildStreamPath(FilePath, Name);
+			fullPath = SafeNativeMethods.BuildStreamPath(FilePath, Name);
 		}
 
 		/// <summary>
@@ -78,16 +78,16 @@ namespace Trinet.Core.IO.Ntfs
 		internal AlternateDataStreamInfo(string filePath, string streamName, string fullPath, bool exists)
 		{
 			if (string.IsNullOrEmpty(fullPath)) fullPath = SafeNativeMethods.BuildStreamPath(filePath, streamName);
-			StreamType = FileStreamType.AlternateDataStream;
+			streamType = FileStreamType.AlternateDataStream;
 
-			FilePath = filePath;
-			Name = streamName;
-			FullPath = fullPath;
-			Exists = exists;
+			this.filePath = filePath;
+			this.name = streamName;
+			this.fullPath = fullPath;
+			this.exists = exists;
 
 			if (Exists)
 			{
-				Size = SafeNativeMethods.GetFileSize(FullPath);
+				this.size = SafeNativeMethods.GetFileSize(FullPath);
 			}
 		}
 
@@ -95,6 +95,8 @@ namespace Trinet.Core.IO.Ntfs
 
 		#region Properties
 
+		string fullPath;
+		
 		/// <summary>
 		/// Returns the full path of this stream.
 		/// </summary>
@@ -102,14 +104,11 @@ namespace Trinet.Core.IO.Ntfs
 		/// The full path of this stream.
 		/// </value>
 		public string FullPath {
-			get {
-				return FullPath;
-			}
-			private set {
-				FullPath = value;
-			}
+			get { return fullPath; }
 		}
 
+		string filePath;
+		
 		/// <summary>
 		/// Returns the full path of the file which contains the stream.
 		/// </summary>
@@ -117,14 +116,11 @@ namespace Trinet.Core.IO.Ntfs
 		/// The full file-system path of the file which contains the stream.
 		/// </value>
 		public string FilePath {
-			get {
-				return FilePath;
-			}
-			private set {
-				FilePath = value;
-			}
+			get { return filePath; }
 		}
 
+		string name;
+		
 		/// <summary>
 		/// Returns the name of the stream.
 		/// </summary>
@@ -132,14 +128,11 @@ namespace Trinet.Core.IO.Ntfs
 		/// The name of the stream.
 		/// </value>
 		public string Name {
-			get {
-				return Name;
-			}
-			private set {
-				Name = value;
-			}
+			get { return name; }
 		}
 
+		bool exists;
+		
 		/// <summary>
 		/// Returns a flag indicating whether the specified stream exists.
 		/// </summary>
@@ -148,14 +141,11 @@ namespace Trinet.Core.IO.Ntfs
 		/// otherwise, <see langword="false"/>.
 		/// </value>
 		public bool Exists {
-			get {
-				return Exists;
-			}
-			private set {
-				Exists = value;
-			}
+			get { return exists; }
 		}
 
+		long size;
+		
 		/// <summary>
 		/// Returns the size of the stream, in bytes.
 		/// </summary>
@@ -163,14 +153,11 @@ namespace Trinet.Core.IO.Ntfs
 		/// The size of the stream, in bytes.
 		/// </value>
 		public long Size {
-			get {
-				return Size;
-			}
-			private set {
-				Size = value;
-			}
+			get { return size; }
 		}
 
+		FileStreamType streamType;
+		
 		/// <summary>
 		/// Returns the type of data.
 		/// </summary>
@@ -179,14 +166,11 @@ namespace Trinet.Core.IO.Ntfs
 		/// </value>
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
 		public FileStreamType StreamType {
-			get {
-				return StreamType;
-			}
-			private set {
-				StreamType = value;
-			}
+			get { return streamType; }
 		}
 
+		FileStreamAttributes attributes;
+		
 		/// <summary>
 		/// Returns attributes of the data stream.
 		/// </summary>
@@ -195,12 +179,7 @@ namespace Trinet.Core.IO.Ntfs
 		/// </value>
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
 		public FileStreamAttributes Attributes {
-			get {
-				return Attributes;
-			}
-			private set {
-				Attributes = value;
-			}
+			get { return attributes; }
 		}
 
 		#endregion
