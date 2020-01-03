@@ -37,9 +37,9 @@ Friend NotInheritable Class SafeHGlobalHandle
 	''' The size of this memory block, in bytes.
 	''' </param>
 	<ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)> _
-	Private Sub New(toManage As IntPtr, size__1 As Integer)
+	Private Sub New(toManage As IntPtr, size As Integer)
 		MyBase.New(IntPtr.Zero, True)
-		Size = size__1
+		_Size = size
 		SetHandle(toManage)
 	End Sub
 
@@ -74,13 +74,6 @@ Friend NotInheritable Class SafeHGlobalHandle
 	''' The size of this memory block, in bytes.
 	''' </value>
 	Public Property Size() As Integer
-		Get
-			Return Size
-		End Get
-		Private Set
-			Size = value
-		End Set
-	End Property
 
 	#End Region
 

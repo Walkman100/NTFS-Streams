@@ -41,15 +41,15 @@ Public NotInheritable Class AlternateDataStreamInfo
 	''' <param name="info">
 	''' The <see cref="SafeNativeMethods.Win32StreamInfo"/> containing the stream information.
 	''' </param>
-	Friend Sub New(filePath__1 As String, info As SafeNativeMethods.Win32StreamInfo)
-		FilePath = filePath__1
-		Name = info.StreamName
-		StreamType = info.StreamType
-		Attributes = info.StreamAttributes
-		Size = info.StreamSize
-		Exists = True
+	Friend Sub New(filePath As String, info As SafeNativeMethods.Win32StreamInfo)
+		_FilePath = filePath
+		_Name = info.StreamName
+		_StreamType = info.StreamType
+		_Attributes = info.StreamAttributes
+		_Size = info.StreamSize
+		_Exists = True
 
-		FullPath = SafeNativeMethods.BuildStreamPath(FilePath, Name)
+		_FullPath = SafeNativeMethods.BuildStreamPath(FilePath, Name)
 	End Sub
 
 	''' <summary>
@@ -72,19 +72,19 @@ Public NotInheritable Class AlternateDataStreamInfo
 	''' <see langword="true"/> if the stream exists;
 	''' otherwise, <see langword="false"/>.
 	''' </param>
-	Friend Sub New(filePath__1 As String, streamName As String, fullPath__2 As String, exists__3 As Boolean)
-		If String.IsNullOrEmpty(fullPath__2) Then
-			fullPath__2 = SafeNativeMethods.BuildStreamPath(filePath__1, streamName)
+	Friend Sub New(filePath As String, streamName As String, fullPath As String, exists As Boolean)
+		If String.IsNullOrEmpty(fullPath) Then
+			fullPath = SafeNativeMethods.BuildStreamPath(filePath, streamName)
 		End If
-		StreamType = FileStreamType.AlternateDataStream
+		_StreamType = FileStreamType.AlternateDataStream
 
-		FilePath = filePath__1
-		Name = streamName
-		FullPath = fullPath__2
-		Exists = exists__3
+		_FilePath = filePath
+		_Name = streamName
+		_FullPath = fullPath
+		_Exists = exists
 
 		If Exists Then
-			Size = SafeNativeMethods.GetFileSize(FullPath)
+			_Size = SafeNativeMethods.GetFileSize(FullPath)
 		End If
 	End Sub
 
@@ -99,13 +99,6 @@ Public NotInheritable Class AlternateDataStreamInfo
 	''' The full path of this stream.
 	''' </value>
 	Public Property FullPath() As String
-		Get
-			Return FullPath
-		End Get
-		Private Set
-			FullPath = value
-		End Set
-	End Property
 
 	''' <summary>
 	''' Returns the full path of the file which contains the stream.
@@ -114,13 +107,6 @@ Public NotInheritable Class AlternateDataStreamInfo
 	''' The full file-system path of the file which contains the stream.
 	''' </value>
 	Public Property FilePath() As String
-		Get
-			Return FilePath
-		End Get
-		Private Set
-			FilePath = value
-		End Set
-	End Property
 
 	''' <summary>
 	''' Returns the name of the stream.
@@ -129,13 +115,6 @@ Public NotInheritable Class AlternateDataStreamInfo
 	''' The name of the stream.
 	''' </value>
 	Public Property Name() As String
-		Get
-			Return Name
-		End Get
-		Private Set
-			Name = value
-		End Set
-	End Property
 
 	''' <summary>
 	''' Returns a flag indicating whether the specified stream exists.
@@ -145,13 +124,6 @@ Public NotInheritable Class AlternateDataStreamInfo
 	''' otherwise, <see langword="false"/>.
 	''' </value>
 	Public Property Exists() As Boolean
-		Get
-			Return Exists
-		End Get
-		Private Set
-			Exists = value
-		End Set
-	End Property
 
 	''' <summary>
 	''' Returns the size of the stream, in bytes.
@@ -160,13 +132,6 @@ Public NotInheritable Class AlternateDataStreamInfo
 	''' The size of the stream, in bytes.
 	''' </value>
 	Public Property Size() As Long
-		Get
-			Return Size
-		End Get
-		Private Set
-			Size = value
-		End Set
-	End Property
 
 	''' <summary>
 	''' Returns the type of data.
@@ -176,13 +141,6 @@ Public NotInheritable Class AlternateDataStreamInfo
 	''' </value>
 	<EditorBrowsable(EditorBrowsableState.Advanced)> _
 	Public Property StreamType() As FileStreamType
-		Get
-			Return StreamType
-		End Get
-		Private Set
-			StreamType = value
-		End Set
-	End Property
 
 	''' <summary>
 	''' Returns attributes of the data stream.
@@ -192,13 +150,6 @@ Public NotInheritable Class AlternateDataStreamInfo
 	''' </value>
 	<EditorBrowsable(EditorBrowsableState.Advanced)> _
 	Public Property Attributes() As FileStreamAttributes
-		Get
-			Return Attributes
-		End Get
-		Private Set
-			Attributes = value
-		End Set
-	End Property
 
 	#End Region
 
@@ -322,10 +273,10 @@ Public NotInheritable Class AlternateDataStreamInfo
 	''' The path of the stream is invalid.
 	''' </exception>
 	Public Function Delete() As Boolean
-		#If NET35 Then
+#If NET35 Then
 		Const  permAccess As FileIOPermissionAccess = FileIOPermissionAccess.Write
 		New FileIOPermission(permAccess, FilePath).Demand()
-		#End If
+#End If
 
 		Return SafeNativeMethods.SafeDeleteFile(FullPath)
 	End Function
@@ -334,7 +285,7 @@ Public NotInheritable Class AlternateDataStreamInfo
 
 	#Region "-Open"
 
-	#If NETFULL Then
+#If NETFULL Then
 	''' <summary>
 	''' Calculates the access to demand.
 	''' </summary>
@@ -379,7 +330,7 @@ Public NotInheritable Class AlternateDataStreamInfo
 
 		Return permAccess
 	End Function
-	#End If
+#End If
 
 	''' <summary>
 	''' Opens this alternate data stream.
@@ -427,10 +378,10 @@ Public NotInheritable Class AlternateDataStreamInfo
 			Throw New ArgumentOutOfRangeException("bufferSize", bufferSize, Nothing)
 		End If
 
-		#If NET35 Then
+#If NET35 Then
 		Dim permAccess As FileIOPermissionAccess = CalculateAccess(mode, access)
 		New FileIOPermission(permAccess, FilePath).Demand()
-		#End If
+#End If
 
 		Dim flags As SafeNativeMethods.NativeFileFlags = If(useAsync, SafeNativeMethods.NativeFileFlags.Overlapped, 0)
 		Dim handle = SafeNativeMethods.SafeCreateFile(FullPath, access.ToNative(), share, IntPtr.Zero, mode, flags, _
