@@ -15,6 +15,12 @@
     <AssemblyOriginatorKeyFile>Trinet.Core.IO.Ntfs.snk</AssemblyOriginatorKeyFile>
     <DelaySign>False</DelaySign>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
+    <OptionStrict>Off</OptionStrict>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionInfer>On</OptionInfer>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
