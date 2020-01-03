@@ -1,8 +1,10 @@
-# NTFS Streams [![Build status](https://ci.appveyor.com/api/projects/status/ou84yb1e4b4xoty7)](https://ci.appveyor.com/project/Walkman100/ntfs-streams)
+# NTFS Streams [![Build status](https://ci.appveyor.com/api/projects/status/ou84yb1e4b4xoty7/branch/c%23-submodule?svg=true)](https://ci.appveyor.com/project/Walkman100/ntfs-streams/branch/c%23-submodule)
 
 A library for working with alternate data streams on NTFS file systems from .NET applications.
 
-This branch is a Submodule-able repo for the library, converted to VB.Net so I can include it directly in my projects.
+This branch is a Submodule-able repo for the library, converted to C# 5.0 so it can be worked on with SharpDevelop.
+
+You can get a CI-compiled DLL [on the artifacts page](https://ci.appveyor.com/project/Walkman100/ntfs-streams/branch/c%23-submodule/artifacts)
 
 The original project is in the master branch, and is part of this article: http://www.codeproject.com/KB/cs/ntfsstreams.aspx
 
