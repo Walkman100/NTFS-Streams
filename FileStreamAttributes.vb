@@ -16,31 +16,33 @@
 '  * and <http://opensource.org/licenses/bsd-license.php>.
 '
 
+Imports System
 
-
-''' <summary>
-''' Represents the attributes of a file stream.
-''' </summary>
-<Flags> _
-Public Enum FileStreamAttributes
+Namespace Trinet.Core.IO.Ntfs
 	''' <summary>
-	''' No attributes.
+	''' Represents the attributes of a file stream.
 	''' </summary>
-	None = 0
-	''' <summary>
-	''' Set if the stream contains data that is modified when read.
-	''' </summary>
-	ModifiedWhenRead = 1
-	''' <summary>
-	''' Set if the stream contains security data.
-	''' </summary>
-	ContainsSecurity = 2
-	''' <summary>
-	''' Set if the stream contains properties.
-	''' </summary>
-	ContainsProperties = 4
-	''' <summary>
-	''' Set if the stream is sparse.
-	''' </summary>
-	Sparse = 8
-End Enum
+	<Flags> _
+	Public Enum FileStreamAttributes
+		''' <summary>
+		''' No attributes.
+		''' </summary>
+		None = 0
+		''' <summary>
+		''' Set if the stream contains data that is modified when read.
+		''' </summary>
+		ModifiedWhenRead = 1
+		''' <summary>
+		''' Set if the stream contains security data.
+		''' </summary>
+		ContainsSecurity = 2
+		''' <summary>
+		''' Set if the stream contains properties.
+		''' </summary>
+		ContainsProperties = 4
+		''' <summary>
+		''' Set if the stream is sparse.
+		''' </summary>
+		Sparse = 8
+	End Enum
+End Namespace

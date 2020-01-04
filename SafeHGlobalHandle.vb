@@ -16,107 +16,109 @@
 '  * and <http://opensource.org/licenses/bsd-license.php>.
 '
 
-
+Imports System
 Imports System.Runtime.ConstrainedExecution
 Imports System.Runtime.InteropServices
 
-''' <summary>
-''' A <see cref="SafeHandle"/> for a global memory allocation.
-''' </summary>
-Friend NotInheritable Class SafeHGlobalHandle
-	Inherits SafeHandle
-	#Region "Constructor"
-
+Namespace Trinet.Core.IO.Ntfs
 	''' <summary>
-	''' Initializes a new instance of the <see cref="SafeHGlobalHandle"/> class.
+	''' A <see cref="SafeHandle"/> for a global memory allocation.
 	''' </summary>
-	''' <param name="toManage">
-	''' The initial handle value.
-	''' </param>
-	''' <param name="size">
-	''' The size of this memory block, in bytes.
-	''' </param>
-	<ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)> _
-	Private Sub New(toManage As IntPtr, size As Integer)
-		MyBase.New(IntPtr.Zero, True)
-		_Size = size
-		SetHandle(toManage)
-	End Sub
-
-	''' <summary>
-	''' Initializes a new instance of the <see cref="SafeHGlobalHandle"/> class.
-	''' </summary>
-	Private Sub New()
-		MyBase.New(IntPtr.Zero, True)
-	End Sub
-
-	#End Region
-
-	#Region "Properties"
-
-	''' <summary>
-	''' Gets a value indicating whether the handle value is invalid.
-	''' </summary>
-	''' <value>
-	''' <see langword="true"/> if the handle value is invalid;
-	''' otherwise, <see langword="false"/>.
-	''' </value>
-	Public Overrides ReadOnly Property IsInvalid() As Boolean
-		Get
-			Return IntPtr.Zero = handle
-		End Get
-	End Property
-
-	''' <summary>
-	''' Returns the size of this memory block.
-	''' </summary>
-	''' <value>
-	''' The size of this memory block, in bytes.
-	''' </value>
-	Public Property Size() As Integer
-
-	#End Region
-
-	#Region "Methods"
-
-	''' <summary>
-	''' Allocates memory from the unmanaged memory of the process using GlobalAlloc.
-	''' </summary>
-	''' <param name="bytes">
-	''' The number of bytes in memory required.
-	''' </param>
-	''' <returns>
-	''' A <see cref="SafeHGlobalHandle"/> representing the memory.
-	''' </returns>
-	''' <exception cref="OutOfMemoryException">
-	''' There is insufficient memory to satisfy the request.
-	''' </exception>
-	Public Shared Function Allocate(bytes As Integer) As SafeHGlobalHandle
-		Return New SafeHGlobalHandle(Marshal.AllocHGlobal(bytes), bytes)
-	End Function
-
-	''' <summary>
-	''' Returns an invalid handle.
-	''' </summary>
-	''' <returns>
-	''' An invalid <see cref="SafeHGlobalHandle"/>.
-	''' </returns>
-	Public Shared Function Invalid() As SafeHGlobalHandle
-		Return New SafeHGlobalHandle()
-	End Function
-
-	''' <summary>
-	''' Executes the code required to free the handle.
-	''' </summary>
-	''' <returns>
-	''' <see langword="true"/> if the handle is released successfully;
-	''' otherwise, in the event of a catastrophic failure, <see langword="false"/>.
-	''' In this case, it generates a releaseHandleFailed MDA Managed Debugging Assistant.
-	''' </returns>
-	Protected Overrides Function ReleaseHandle() As Boolean
-		Marshal.FreeHGlobal(handle)
-		Return True
-	End Function
-
-	#End Region
-End Class
+	Friend NotInheritable Class SafeHGlobalHandle
+		Inherits SafeHandle
+		#Region "Constructor"
+	
+		''' <summary>
+		''' Initializes a new instance of the <see cref="SafeHGlobalHandle"/> class.
+		''' </summary>
+		''' <param name="toManage">
+		''' The initial handle value.
+		''' </param>
+		''' <param name="size">
+		''' The size of this memory block, in bytes.
+		''' </param>
+		<ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)> _
+		Private Sub New(toManage As IntPtr, size As Integer)
+			MyBase.New(IntPtr.Zero, True)
+			_Size = size
+			SetHandle(toManage)
+		End Sub
+	
+		''' <summary>
+		''' Initializes a new instance of the <see cref="SafeHGlobalHandle"/> class.
+		''' </summary>
+		Private Sub New()
+			MyBase.New(IntPtr.Zero, True)
+		End Sub
+	
+		#End Region
+	
+		#Region "Properties"
+	
+		''' <summary>
+		''' Gets a value indicating whether the handle value is invalid.
+		''' </summary>
+		''' <value>
+		''' <see langword="true"/> if the handle value is invalid;
+		''' otherwise, <see langword="false"/>.
+		''' </value>
+		Public Overrides ReadOnly Property IsInvalid() As Boolean
+			Get
+				Return IntPtr.Zero = handle
+			End Get
+		End Property
+	
+		''' <summary>
+		''' Returns the size of this memory block.
+		''' </summary>
+		''' <value>
+		''' The size of this memory block, in bytes.
+		''' </value>
+		Public Property Size() As Integer
+	
+		#End Region
+	
+		#Region "Methods"
+	
+		''' <summary>
+		''' Allocates memory from the unmanaged memory of the process using GlobalAlloc.
+		''' </summary>
+		''' <param name="bytes">
+		''' The number of bytes in memory required.
+		''' </param>
+		''' <returns>
+		''' A <see cref="SafeHGlobalHandle"/> representing the memory.
+		''' </returns>
+		''' <exception cref="OutOfMemoryException">
+		''' There is insufficient memory to satisfy the request.
+		''' </exception>
+		Public Shared Function Allocate(bytes As Integer) As SafeHGlobalHandle
+			Return New SafeHGlobalHandle(Marshal.AllocHGlobal(bytes), bytes)
+		End Function
+	
+		''' <summary>
+		''' Returns an invalid handle.
+		''' </summary>
+		''' <returns>
+		''' An invalid <see cref="SafeHGlobalHandle"/>.
+		''' </returns>
+		Public Shared Function Invalid() As SafeHGlobalHandle
+			Return New SafeHGlobalHandle()
+		End Function
+	
+		''' <summary>
+		''' Executes the code required to free the handle.
+		''' </summary>
+		''' <returns>
+		''' <see langword="true"/> if the handle is released successfully;
+		''' otherwise, in the event of a catastrophic failure, <see langword="false"/>.
+		''' In this case, it generates a releaseHandleFailed MDA Managed Debugging Assistant.
+		''' </returns>
+		Protected Overrides Function ReleaseHandle() As Boolean
+			Marshal.FreeHGlobal(handle)
+			Return True
+		End Function
+	
+		#End Region
+	End Class
+End Namespace
