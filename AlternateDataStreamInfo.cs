@@ -45,14 +45,14 @@ namespace Trinet.Core.IO.Ntfs
 		/// </param>
 		internal AlternateDataStreamInfo(string filePath, SafeNativeMethods.Win32StreamInfo info)
 		{
-			this.filePath = filePath;
-			name = info.StreamName;
-			streamType = info.StreamType;
-			attributes = info.StreamAttributes;
-			size = info.StreamSize;
-			exists = true;
+			FilePath = filePath;
+			Name = info.StreamName;
+			StreamType = info.StreamType;
+			Attributes = info.StreamAttributes;
+			Size = info.StreamSize;
+			Exists = true;
 
-			fullPath = SafeNativeMethods.BuildStreamPath(FilePath, Name);
+			FullPath = SafeNativeMethods.BuildStreamPath(FilePath, Name);
 		}
 
 		/// <summary>
@@ -78,16 +78,16 @@ namespace Trinet.Core.IO.Ntfs
 		internal AlternateDataStreamInfo(string filePath, string streamName, string fullPath, bool exists)
 		{
 			if (string.IsNullOrEmpty(fullPath)) fullPath = SafeNativeMethods.BuildStreamPath(filePath, streamName);
-			streamType = FileStreamType.AlternateDataStream;
+			StreamType = FileStreamType.AlternateDataStream;
 
-			this.filePath = filePath;
-			this.name = streamName;
-			this.fullPath = fullPath;
-			this.exists = exists;
+			FilePath = filePath;
+			Name = streamName;
+			FullPath = fullPath;
+			Exists = exists;
 
 			if (Exists)
 			{
-				this.size = SafeNativeMethods.GetFileSize(FullPath);
+				Size = SafeNativeMethods.GetFileSize(FullPath);
 			}
 		}
 
@@ -95,44 +95,30 @@ namespace Trinet.Core.IO.Ntfs
 
 		#region Properties
 
-		string fullPath;
-		
 		/// <summary>
 		/// Returns the full path of this stream.
 		/// </summary>
 		/// <value>
 		/// The full path of this stream.
 		/// </value>
-		public string FullPath {
-			get { return fullPath; }
-		}
+		public string FullPath { get; private set; }
 
-		string filePath;
-		
 		/// <summary>
 		/// Returns the full path of the file which contains the stream.
 		/// </summary>
 		/// <value>
 		/// The full file-system path of the file which contains the stream.
 		/// </value>
-		public string FilePath {
-			get { return filePath; }
-		}
+		public string FilePath { get; private set; }
 
-		string name;
-		
 		/// <summary>
 		/// Returns the name of the stream.
 		/// </summary>
 		/// <value>
 		/// The name of the stream.
 		/// </value>
-		public string Name {
-			get { return name; }
-		}
+		public string Name { get; private set; }
 
-		bool exists;
-		
 		/// <summary>
 		/// Returns a flag indicating whether the specified stream exists.
 		/// </summary>
@@ -140,24 +126,16 @@ namespace Trinet.Core.IO.Ntfs
 		/// <see langword="true"/> if the stream exists;
 		/// otherwise, <see langword="false"/>.
 		/// </value>
-		public bool Exists {
-			get { return exists; }
-		}
+		public bool Exists { get; private set; }
 
-		long size;
-		
 		/// <summary>
 		/// Returns the size of the stream, in bytes.
 		/// </summary>
 		/// <value>
 		/// The size of the stream, in bytes.
 		/// </value>
-		public long Size {
-			get { return size; }
-		}
+		public long Size { get; private set; }
 
-		FileStreamType streamType;
-		
 		/// <summary>
 		/// Returns the type of data.
 		/// </summary>
@@ -165,12 +143,8 @@ namespace Trinet.Core.IO.Ntfs
 		/// One of the <see cref="FileStreamType"/> values.
 		/// </value>
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
-		public FileStreamType StreamType {
-			get { return streamType; }
-		}
+		public FileStreamType StreamType { get; private set; }
 
-		FileStreamAttributes attributes;
-		
 		/// <summary>
 		/// Returns attributes of the data stream.
 		/// </summary>
@@ -178,9 +152,7 @@ namespace Trinet.Core.IO.Ntfs
 		/// A combination of <see cref="FileStreamAttributes"/> values.
 		/// </value>
 		[EditorBrowsable(EditorBrowsableState.Advanced)]
-		public FileStreamAttributes Attributes {
-			get { return attributes; }
-		}
+		public FileStreamAttributes Attributes { get; private set; }
 
 		#endregion
 

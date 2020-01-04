@@ -393,7 +393,7 @@ namespace Trinet.Core.IO.Ntfs
 			long result = 0L;
 			if (null != handle && !handle.IsInvalid)
 			{
-			    Trinet.Core.IO.Ntfs.SafeNativeMethods.LargeInteger temp;
+				Trinet.Core.IO.Ntfs.SafeNativeMethods.LargeInteger temp;
 				if (GetFileSizeEx(handle, out temp))
 				{
 					result = temp.ToInt64();
@@ -490,7 +490,7 @@ namespace Trinet.Core.IO.Ntfs
 								// Skip the contents of the stream:
 								if (0 != streamId.Size.Low || 0 != streamId.Size.High)
 								{
-								    int _;
+									int _;
 									if (!finished && !BackupSeek(hFile, streamId.Size.Low, streamId.Size.High, out _, out _, ref context))
 									{
 										finished = true;

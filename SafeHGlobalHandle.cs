@@ -41,7 +41,7 @@ namespace Trinet.Core.IO.Ntfs
 		[ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
 		private SafeHGlobalHandle(IntPtr toManage, int size) : base(IntPtr.Zero, true)
 		{
-			this.size = size;
+			Size = size;
 			SetHandle(toManage);
 		}
 
@@ -69,17 +69,13 @@ namespace Trinet.Core.IO.Ntfs
 			}
 		}
 
-		int size;
-		
 		/// <summary>
 		/// Returns the size of this memory block.
 		/// </summary>
 		/// <value>
 		/// The size of this memory block, in bytes.
 		/// </value>
-		public int Size {
-			get { return size; }
-		}
+		public int Size { get; private set; }
 
 		#endregion
 
